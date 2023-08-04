@@ -29,6 +29,9 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var url = 'https://pokeapi.co/api/v2/pokemon';
+  List aData = [];
+
   @override
   void initState(){
 
@@ -41,25 +44,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override 
   Widget build(BuildContext context){
            return Scaffold(
-            backgroundColor: Colors.red,
-            body: Center(
-              child: ElevatedButton(
-                child: Text('Press Button'),
-                onPressed:  (){
-                    fetchPokeData();
+            //backgroundColor: Colors.red,
+            body: Column(
+              children: [
+                Expanded(child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.4,
+                ), itemCount: aData.length,
+                itemBuilder: (context, index){
+                         return Card(
+                                 child: Text( 
+                                  aData[index]["name"]
+                                  ),
+                         );
+                          
                 },
-              ),
-            ),
-           );
-
-            
+              ))
+              ],
+            )
+      );
+                    
   }
 
 
 
   void fetchPokeData() async{
 
-  var url = 'https://pokeapi.co/api/v2/pokemon';
+  
   final res = await http.get(Uri.parse(url)); 
   
   if(res.statusCode == 200){
@@ -67,17 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
     //debugPrint('$res.body'); 
 
     var allData = json.decode(res.body);
-    var aData = allData["results"];
+    //var 
+    aData = allData["results"];
 
     //debugPrint( '$aData' );
     debugPrint( aData[0]["name"] );
     setState((){
 
     });
-  }
-    //var url = Uri.http(url);
-  //http.get(url).then((val) => {
-     //      debugPrint('$val.statusCode')
-   // });
+  }   
   }
 }
