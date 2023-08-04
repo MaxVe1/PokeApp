@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var url = 'https://pokeapi.co/api/v2/pokemon';
+  var url = 'https://pokeapi.co/api/v2/pokem111on';
   List aData = [];
 
   @override
@@ -43,11 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override 
   Widget build(BuildContext context){
-           return Scaffold(
+           if(aData.length != 0){
+            return Scaffold(
             //backgroundColor: Colors.red,
             body: Column(
               children: [
-                Expanded(child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                 Expanded(child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1.4,
                 ), itemCount: aData.length,
@@ -57,19 +58,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                   aData[index]["name"]
                                   ),
                          );
-                          
                 },
-              ))
+                ),
+              )          
               ],
             )
       );
-                    
+           } else{
+                 return Scaffold(
+       appBar: AppBar(
+         title: Text('Please wait for updating data'),
+       ),
+       body: Center(
+         child:  CircularProgressIndicator(
+         backgroundColor: Colors.cyanAccent,
+         valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+         ),
+        ),
+     );
+    }                   
   }
-
-
-
   void fetchPokeData() async{
-
   
   final res = await http.get(Uri.parse(url)); 
   
