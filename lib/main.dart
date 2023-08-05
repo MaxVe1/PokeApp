@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                        Text( 
                                         aData[index]["name"]
                                        ),
-                                       Image(image: NetworkImage('http://via.placeholder.com/350x150')),
+                                       Image(image: NetworkImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png")),
                                    ],
                                  ),                                                                  
                          );
