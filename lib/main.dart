@@ -29,7 +29,8 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var url = 'https://pokeapi.co/api/v2/pokem111on';
+  //var url = 'https://pokeapi.co/api/v2/pokemon';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
   List aData = [];
 
   @override
@@ -54,9 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ), itemCount: aData.length,
                 itemBuilder: (context, index){
                          return Card(
-                                 child: Text( 
-                                  aData[index]["name"]
-                                  ),
+                                 child: Column(
+                                   children: [
+                                       Text( 
+                                        aData[index]["name"]
+                                       ),
+                                       Image(image: NetworkImage('http://via.placeholder.com/350x150')),
+                                   ],
+                                 ),                                                                  
                          );
                 },
                 ),
