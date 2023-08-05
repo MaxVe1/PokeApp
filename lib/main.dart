@@ -28,9 +28,17 @@ class HomeScreen extends StatefulWidget{
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+extension StringExtension on String {
+    String capitalize() {
+      return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    }
+}
+
+
 class _HomeScreenState extends State<HomeScreen> {
   //var url = 'https://pokeapi.co/api/v2/pokemon';
   var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
+  var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
   List aData = [];
 
   @override
@@ -54,14 +62,58 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.4,
                 ), itemCount: aData.length,
                 itemBuilder: (context, index){
+
                          return Card(
-                                 child: Column(
+                                 color: Colors.green,
+                                 child: Stack(
                                    children: [
-                                       Text( 
-                                        aData[index]["name"]
+                                   Positioned(
+                                    bottom:85,
+                                    left:270,
+                                    child: Text( 
+                                        aData[index]["name"].toString().capitalize(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold, fontSize: 18,
+                                          color: Colors.white,
+                                          ),
                                        ),
-                                       Image(image: NetworkImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png")),
-                                   ],
+                                   ),
+                                   Positioned(
+                                    top:90,
+                                    left:190,
+                                    child: CircleAvatar(
+                                    backgroundImage:
+                                    NetworkImage('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png'),
+                                    radius: 120,
+                                    backgroundColor: Colors.white,
+                                    //Image(image: NetworkImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png")),
+                                    )                                                                   
+                                   ),
+                                   Positioned(
+                                       bottom:55,
+                                       left:272,
+                                       child: Container(
+                                         child: Padding(
+                                         padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
+                                         child: Text( 
+                                         aData[index]["name"],
+                                         style: TextStyle(
+                                          color: Colors.white
+                                         ),
+                                        //decoration: BoxDecoration
+                                        ),
+                                       ), 
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                                           color: Colors.black26,                                         
+                                          ),
+                                        ),
+
+                                       ),
+                                                                    
+                                   
+                                   ],                               
+                                                                         
                                  ),                                                                  
                          );
                 },
@@ -87,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void fetchPokeData() async{
   
   final res = await http.get(Uri.parse(url)); 
-  
+  //final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${index}/')); 
   if(res.statusCode == 200){
     debugPrint('Res OK !!!'); 
     //debugPrint('$res.body'); 
