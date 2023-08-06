@@ -37,7 +37,7 @@ extension StringExtension on String {
 
 class _HomeScreenState extends State<HomeScreen> {
   //var url = 'https://pokeapi.co/api/v2/pokemon';
-  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
   var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
   List aData = [];
   var a2  = [];
@@ -55,6 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override 
   Widget build(BuildContext context) {
            if(aData.length != 0){
+            var width = MediaQuery.of(context).size.width;
+            var height = MediaQuery.of(context).size.height;
             return Scaffold (
             //backgroundColor: Colors.red,
             body: Column(
@@ -107,36 +109,41 @@ class _HomeScreenState extends State<HomeScreen> {
  
 
                          //type();
-                         
-                         return Card(
-                                 color: Colors.green,
+                         return Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Container(
+                                 //color: Colors.green,
+                                 decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                 ),
                                  child: Stack(
                                    children: [
                                    Positioned(
-                                    bottom:85,
-                                    left: 265,
+                                    bottom:20,
+                                    left: 10,
                                     child: Text( 
                                         aData[index]["name"].toString().capitalize(),
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 18,
+                                          fontWeight: FontWeight.bold, fontSize: 12,
                                           color: Colors.white,
                                           ),
                                        ),
                                    ),
                                    Positioned(
-                                    top:90,
-                                    left:190,
+                                    top:15,
+                                    left:75,
                                     child: CircleAvatar(
                                     backgroundImage:
                                     NetworkImage('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png'),
-                                    radius: 120,
+                                    radius: 30,
                                     backgroundColor: Colors.white,
                                      
                                     )                                                                   
                                    ),
                                    Positioned(
-                                       bottom:55,
-                                       left:280,
+                                       bottom:50,
+                                       left:7,
                                        child: Container(
                                          child: Padding(
                                          padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
@@ -161,7 +168,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                        ),
                                    ],                                                    
                                  ),
+                         ),
+
+
                          );
+                         
                 },
                 ),
               )          
