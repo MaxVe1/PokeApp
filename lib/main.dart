@@ -141,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                          child: Padding(
                                          padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
                                          child: Text( 
+                                           //"Wait for text",
                                            a2[index].toString().capitalize(),
                                          // 'Text',
                                          // a2[index].toString(),
@@ -197,8 +198,21 @@ class _HomeScreenState extends State<HomeScreen> {
     aData = allData["results"];
     debugPrint( '$aData' );
     //debugPrint( aData[0]["name"] );
+    List res2 = [];
+    List parsedListJson = [];
+    List aa2  = [];
     for(int i=0;i<aData.length;i++){
-           a2.add(i);          
+          res2.add(await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${i+1}/')));       
+          //debugPrint(res2[i].body);
+         
+          parsedListJson.add(json.decode(res2[i].body));
+          aa2.add(parsedListJson[i]["types"][0]["type"]["name"]);
+          //a2[item] = aa2.toString();
+          debugPrint(aa2[i]);
+          
+           a2.add(aa2[i]);
+
+           //a2.add(i);          
     }
     
    // var parsedListJson = jsonDecode(res2.body);
@@ -229,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
    void fetchPokeItem(item) async{
 
       // if(item == null) {
-          final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/4/'));  
+          final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${item}/'));  
           //debugPrint('$res2.body'); 
           //var allData2 = json.decode(res2.body);
           var parsedListJson = jsonDecode(res2.body);
