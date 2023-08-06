@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() {
+ void main() async {
   runApp(MyApp());
 }
 
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
   var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
   List aData = [];
-  List a2  = [];
+  var a2  = [];
 
   @override
   void initState(){
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
  
 
                          //type();
-
+                         
                          return Card(
                                  color: Colors.green,
                                  child: Stack(
@@ -141,7 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                          child: Padding(
                                          padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
                                          child: Text( 
-                                          a2[0].toString().capitalize(),
+                                           a2[index].toString().capitalize(),
+                                         // 'Text',
                                          // a2[index].toString(),
                                           //a2.toString(),
                                          //type().toString(),
@@ -183,9 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void fetchPokeData() async{
   
   final res = await http.get(Uri.parse(url)); 
-  final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/1/')); 
-   debugPrint('$res2.body'); 
-   var allData2 = json.decode(res2.body);
+//  final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/1/')); 
+ //  debugPrint('$res2.body'); 
+   //var allData2 = json.decode(res2.body);
    //var a2=allData2["types"][0]["type"]["name"];
    //debugPrint('$a2'); 
   if(res.statusCode == 200){
@@ -194,22 +195,80 @@ class _HomeScreenState extends State<HomeScreen> {
     var allData = json.decode(res.body);
     //var 
     aData = allData["results"];
-    //debugPrint( '$aData' );
+    debugPrint( '$aData' );
     //debugPrint( aData[0]["name"] );
+    for(int i=0;i<aData.length;i++){
+           a2.add(i);          
+    }
     
-    var parsedListJson = jsonDecode(res2.body);
-    var aa2 = parsedListJson["types"][0]["type"]["name"];
+   // var parsedListJson = jsonDecode(res2.body);
+   // var aa2 = parsedListJson["types"][0]["type"]["name"];
+
+
     //List<String> itemsList = List<String>.from(parsedListJson.map<String>((dynamic i) => allData2.fromJson(i)));
     //debugPrint("$parsedListJson");
-    debugPrint("$aa2");
+   // debugPrint("$aa2");
 
-    a2.add(aa2);
+    //a2.add("aa2");
     //a2 = itemsList;
     setState((){
     });
-  }   
+  } 
+  }
+
+//   Future<String> token() async {
+//   sharedPreferences = await SharedPreferences.getInstance();
+//   return "Lorem ipsum dolor";
+// }
+
+// token().then((value) {
+//   print(value);
+// });
+
+
+   void fetchPokeItem(item) async{
+
+      // if(item == null) {
+          final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/4/'));  
+          //debugPrint('$res2.body'); 
+          //var allData2 = json.decode(res2.body);
+          var parsedListJson = jsonDecode(res2.body);
+          var aa2 = parsedListJson["types"][0]["type"]["name"];
+          //a2[item] = aa2.toString();
+
+          
+          a2.add(aa2);
+          //return aa2;
+     //  }     
+      //  else{
+      //     final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${item+1}/')); 
+      //     //final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${item+1}/'));
+      //     //debugPrint('$res2.body'); 
+      //     //var allData2 = json.decode(res2.body);
+      //     var parsedListJson = jsonDecode(res2.body);
+      //     var aa2 = parsedListJson["types"][0]["type"]["name"];
+      //     //debugPrint('Irem++++${aa2}++ ____${parsedListJson}_Index:${item}');
+
+      //     debugPrint('_Index:${item}Irem++++${aa2}+');
+      //     //a2[item] = aa2.toString();
+      //     //a2.add(item);
+      //     a2.add(aa2);
+      //     //a2[0] = aa2;
+      //     //a2.insert(a2.length-1, aa2);
+      //     //a2 = parsedListJson["types"][0]["type"]["name"];
+      //     //return "Some Text";//aa2;
+
+           setState((){
+           });
+      //  }
+           //return aa2;
+       
   }
   
+ 
+
+
+
 //   void type() async{
 //     final res2 = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/1/')); 
      
@@ -235,6 +294,5 @@ class _HomeScreenState extends State<HomeScreen> {
 //             });
 
 //     // }
-     
   }
-
+  
