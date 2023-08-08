@@ -35,10 +35,10 @@ extension StringExtension on String {
 
 class _HomeScreenState extends State<HomeScreen> {
   //var url = 'https://pokeapi.co/api/v2/pokemon';
-  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=40';
   var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
-  List aData = [];
-  var a2  = [];
+  List pokeNames = [];
+  var pokeTypes  = [];
 
   @override
   void initState(){
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override 
   Widget build(BuildContext context) {
-          if(aData.length != 0){
+          if(pokeNames.length != 0){
           var width = MediaQuery.of(context).size.width;
           //var height = MediaQuery.of(context).size.height;
           return Scaffold (            
@@ -81,24 +81,25 @@ class _HomeScreenState extends State<HomeScreen> {
                  Expanded(child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1.4,
-                ), itemCount: aData.length,
+                ), itemCount: pokeNames.length,
                 itemBuilder: (context, index){
                          return Padding(
                          padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 8),
                          child: Container(
                                  //color: Colors.green,
                                  decoration: BoxDecoration(
-                                  color: a2[index] == "grass" ? Colors.greenAccent
-                                       : a2[index] == "fire" ? Colors.redAccent 
-                                       : a2[index] == "water" ? Colors.blue
-                                       : a2[index] == "electric" ? Colors.yellow
-                                       : a2[index] == "rock" ? Colors.grey
-                                       : a2[index] == "ground" ? Colors.brown
-                                       : a2[index] == "psychic" ? Colors.indigo
-                                       : a2[index] == "fighting" ? Colors.orange
-                                       : a2[index] == "bug" ? Colors.lightGreenAccent
-                                       : a2[index] == "ghost" ? Colors.deepPurple
-                                       : a2[index] == "normal" ? Colors.black26
+                                  color: pokeTypes[index] == "grass" ? Colors.greenAccent
+                                       : pokeTypes[index] == "fire" ? Colors.redAccent 
+                                       : pokeTypes[index] == "water" ? Colors.blue
+                                       : pokeTypes[index] == "electric" ? Colors.yellow
+                                       : pokeTypes[index] == "rock" ? Colors.grey
+                                       : pokeTypes[index] == "ground" ? Colors.brown
+                                       : pokeTypes[index] == "psychic" ? Colors.indigo
+                                       : pokeTypes[index] == "fighting" ? Colors.orange
+                                       : pokeTypes[index] == "bug" ? Colors.lightGreenAccent
+                                       : pokeTypes[index] == "ghost" ? Colors.deepPurple
+                                       : pokeTypes[index] == "normal" ? Colors.black26
+                                       : pokeTypes[index] == "fairy" ? Colors.limeAccent
                                        : Colors.pink,
                                   //Colors.green,
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     bottom:20,
                                     left: 10,
                                     child: Text( 
-                                        aData[index]["name"].toString().capitalize(),
+                                        pokeNames[index]["name"].toString().capitalize(),
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold, fontSize: 12,
                                           color: Colors.white,
@@ -134,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                          child: Padding(
                                          padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
                                          child: Text(                                           
-                                           a2[index].toString().capitalize(),
+                                           pokeTypes[index].toString().capitalize(),
                                           style: TextStyle(
                                           color: Colors.white
                                          ),
@@ -186,19 +187,19 @@ class _HomeScreenState extends State<HomeScreen> {
    
     var allData = json.decode(res.body);
    
-    aData = allData["results"];
-    debugPrint( '$aData' );
+    pokeNames = allData["results"];
+    debugPrint( '$pokeNames' );
    
     List res2 = [];
     List parsedListJson = [];
     List aa2  = [];
-    for(int i=0;i<aData.length;i++){
+    for(int i=0;i< pokeNames.length;i++){
           res2.add(await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${i+1}/')));       
               
           parsedListJson.add(json.decode(res2[i].body));
           aa2.add(parsedListJson[i]["types"][0]["type"]["name"]);          
           debugPrint(aa2[i]);          
-          a2.add(aa2[i]);
+          pokeTypes.add(aa2[i]);
                    
     }
   
