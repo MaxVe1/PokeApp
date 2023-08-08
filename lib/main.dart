@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:poke_app/poke_details.dart';
+
  void main() async {
   runApp(MyApp());
 }
@@ -83,7 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.4,
                 ), itemCount: pokeNames.length,
                 itemBuilder: (context, index){
-                         return Padding(
+                         return InkWell(
+                          child:  Padding(
                          padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 8),
                          child: Container(
                                  //color: Colors.green,
@@ -136,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                          padding: const EdgeInsets.only(left: 8.0,right: 8.0, top:4, bottom: 4),
                                          child: Text(                                           
                                            pokeTypes[index].toString().capitalize(),
-                                          style: TextStyle(
-                                          color: Colors.white
+                                           style: TextStyle(
+                                           color: Colors.white
                                          ),
                                         ),
                                        ), 
@@ -152,7 +155,30 @@ class _HomeScreenState extends State<HomeScreen> {
                          ),
 
 
+                         ),
+                         onTap: (){
+                          //ToDo Navigate to new detail screen
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => PokeDetails(
+                           pokeDetail: pokeNames[index],
+                           color: pokeTypes[index] == "grass" ? Colors.greenAccent
+                                       : pokeTypes[index] == "fire" ? Colors.redAccent 
+                                       : pokeTypes[index] == "water" ? Colors.blue
+                                       : pokeTypes[index] == "electric" ? Colors.yellow
+                                       : pokeTypes[index] == "rock" ? Colors.grey
+                                       : pokeTypes[index] == "ground" ? Colors.brown
+                                       : pokeTypes[index] == "psychic" ? Colors.indigo
+                                       : pokeTypes[index] == "fighting" ? Colors.orange
+                                       : pokeTypes[index] == "bug" ? Colors.lightGreenAccent
+                                       : pokeTypes[index] == "ghost" ? Colors.deepPurple
+                                       : pokeTypes[index] == "normal" ? Colors.black26
+                                       : pokeTypes[index] == "fairy" ? Colors.limeAccent
+                                       : Colors.pink,
+                           heroTag: index
+                          )));
+                         },
                          );
+                         
+                        
                          
                 },
                 ),
