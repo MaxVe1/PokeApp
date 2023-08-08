@@ -37,7 +37,7 @@ extension StringExtension on String {
 
 class _HomeScreenState extends State<HomeScreen> {
   //var url = 'https://pokeapi.co/api/v2/pokemon';
-  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=40';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
   var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
   List pokeNames = [];
   var pokeTypes  = [];
@@ -159,7 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
                          onTap: (){
                           //ToDo Navigate to new detail screen
                           Navigator.push(context, MaterialPageRoute(builder: (_) => PokeDetails(
-                           pokeDetail: pokeNames[index],
+                           pokeDetail: pokeNames[index]["name"].toString().capitalize(),
+                           pokeImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png",
                            color: pokeTypes[index] == "grass" ? Colors.greenAccent
                                        : pokeTypes[index] == "fire" ? Colors.redAccent 
                                        : pokeTypes[index] == "water" ? Colors.blue
@@ -177,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )));
                          },
                          );
-                         
+                       
                         
                          
                 },
