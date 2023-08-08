@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ), itemCount: pokeNames.length,
                 itemBuilder: (context, index){
                          return InkWell(
-                          child:  Padding(
+                         child:  Padding(
                          padding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 8),
                          child: Container(
                                  //color: Colors.green,
@@ -160,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //ToDo Navigate to new detail screen
                           Navigator.push(context, MaterialPageRoute(builder: (_) => PokeDetails(
                            pokeDetail: pokeNames[index]["name"].toString().capitalize(),
+                           pokeType: pokeTypes[index].toString().capitalize(),
                            pokeImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png",
                            color: pokeTypes[index] == "grass" ? Colors.greenAccent
                                        : pokeTypes[index] == "fire" ? Colors.redAccent 
