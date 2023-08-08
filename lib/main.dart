@@ -35,7 +35,7 @@ extension StringExtension on String {
 
 class _HomeScreenState extends State<HomeScreen> {
   //var url = 'https://pokeapi.co/api/v2/pokemon';
-  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=100';
   var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
   List aData = [];
   var a2  = [];
@@ -88,7 +88,19 @@ class _HomeScreenState extends State<HomeScreen> {
                          child: Container(
                                  //color: Colors.green,
                                  decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  color: a2[index] == "grass" ? Colors.greenAccent
+                                       : a2[index] == "fire" ? Colors.redAccent 
+                                       : a2[index] == "water" ? Colors.blue
+                                       : a2[index] == "electric" ? Colors.yellow
+                                       : a2[index] == "rock" ? Colors.grey
+                                       : a2[index] == "ground" ? Colors.brown
+                                       : a2[index] == "psychic" ? Colors.indigo
+                                       : a2[index] == "fighting" ? Colors.orange
+                                       : a2[index] == "bug" ? Colors.lightGreenAccent
+                                       : a2[index] == "ghost" ? Colors.deepPurple
+                                       : a2[index] == "normal" ? Colors.black26
+                                       : Colors.pink,
+                                  //Colors.green,
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
                                  ),
                                  child: Stack(
