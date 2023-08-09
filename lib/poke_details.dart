@@ -7,13 +7,13 @@ class PokeDetails extends StatefulWidget{
   final color;
   final heroTag;
 
-  //final pokeHeight;
-  //final pokeWeight;
+  final pokeHeight;
+  final pokeWeight;
   //final key;
 
   const PokeDetails( {
     //Key key, 
-    this.pokeDetail, this.pokeType, this.color, this.heroTag , this.pokeImage, /*this.pokeHeight, this.pokeWeight*/});
+    this.pokeDetail, this.pokeType, this.color, this.heroTag , this.pokeImage, this.pokeHeight, this.pokeWeight});
     // : super(key: key);
   
   @override
@@ -138,7 +138,7 @@ class _PokeDetailsState extends State<PokeDetails> {
                            ),
                            Container(
                                  width: width * 0.45, 
-                                 child: Text("XX.X Cm", style: TextStyle(
+                                 child: Text('${widget.pokeWeight} Cm', style: TextStyle(
                                   color: Colors.black, fontSize: 17,
                                   fontWeight: FontWeight.bold
                                  ),),
@@ -158,7 +158,7 @@ class _PokeDetailsState extends State<PokeDetails> {
                            ),
                            Container(
                                  width: width * 0.45, 
-                                 child: Text("XX.X Kg", style: TextStyle(
+                                 child: Text("${widget.pokeHeight} Kg", style: TextStyle(
                                   color: Colors.black, fontSize: 17,
                                   fontWeight: FontWeight.bold
                                  ),),

@@ -34,13 +34,12 @@ extension StringExtension on String {
     }
 }
 
-
 class _HomeScreenState extends State<HomeScreen> {
-  //var url = 'https://pokeapi.co/api/v2/pokemon';
-  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
-  var url2='https://pokeapi.co/api/v2/pokemon-form/1/';
+  var url ='https://pokeapi.co/api/v2/pokemon?offset=0&limit=50';
   List pokeNames = [];
   var pokeTypes  = [];
+  List pokeHeightArr = [];
+  List pokeWeightArr = [];
 
   @override
   void initState(){
@@ -54,20 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override 
   Widget build(BuildContext context) {
           if(pokeNames.length != 0){
-          var width = MediaQuery.of(context).size.width;
-          //var height = MediaQuery.of(context).size.height;
-          return Scaffold (            
+          var width = MediaQuery.of(context).size.width;          
+          return Scaffold (  
+            // appBar: AppBar(
+            //          title: Text('Welcome to PokeApp'),
+            // ),          
             body: Stack(
-              children: [
-                // Image for Pokeball (Optional)
-                // Positioned(
-                // top:-50,
-                // right:-50,
-                // child: //NetworkImage(''),
-                // Image.asset('images/pokemon.png',
-                // width: 200, fit: BoxFit.fitWidth,
-                // )
-                // ),
+              children: [           
                 Positioned(
                   top: 100,
                   left: 20,
@@ -153,13 +145,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                    ],                                                    
                                  ),
                          ),
-
-
                          ),
                          onTap: (){
                           //ToDo Navigate to new detail screen
                           Navigator.push(context, MaterialPageRoute(builder: (_) => PokeDetails(
                            pokeDetail: pokeNames[index]["name"].toString().capitalize(),
+                           pokeHeight: pokeHeightArr[index].toString(),
+                           pokeWeight: pokeWeightArr[index].toString(),
                            pokeType: pokeTypes[index].toString().capitalize(),
                            pokeImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index+1}.png",
                            color: pokeTypes[index] == "grass" ? Colors.greenAccent
@@ -178,33 +170,32 @@ class _HomeScreenState extends State<HomeScreen> {
                            heroTag: index
                           )));
                          },
-                         );
-                       
-                        
-                         
+                         );                         
                 },
                 ),
               )          
               ],
               )
-
-              ) //<==Column 51:15
-              ],
+              )],
             )
           );
            } else{
                  return Scaffold(
-                  
-       appBar: AppBar(
-         title: Text('Please wait for updating data'),
-       ),
-       body: Center(
-         child:  CircularProgressIndicator(
-         backgroundColor: Colors.cyanAccent,
-         valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
-         ),
-        ),
-     );
+                  appBar: AppBar(
+                     title: Text('PokeApp: Please wait for updating data ...'),
+                  ),
+                  body: Stack(
+                  children: [                         
+                     Positioned(
+                     child: Center(
+                     child:  CircularProgressIndicator(
+                     backgroundColor: Colors.cyanAccent,
+                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+                     ),                     
+                  ),                                
+                  ),        
+                  ]),
+           );
     }                   
   }
   void fetchPokeData() async{
@@ -216,19 +207,27 @@ class _HomeScreenState extends State<HomeScreen> {
     var allData = json.decode(res.body);
    
     pokeNames = allData["results"];
-    debugPrint( '$pokeNames' );
+    //debugPrint( '$pokeNames' );
    
     List res2 = [];
     List parsedListJson = [];
     List aa2  = [];
+
+    List resHeightW = [];
+    List parsedHWJson = [];
+
     for(int i=0;i< pokeNames.length;i++){
           res2.add(await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon-form/${i+1}/')));       
               
           parsedListJson.add(json.decode(res2[i].body));
           aa2.add(parsedListJson[i]["types"][0]["type"]["name"]);          
-          debugPrint(aa2[i]);          
+                  
           pokeTypes.add(aa2[i]);
-                   
+
+          resHeightW.add(await http.get(Uri.parse(('https://pokeapi.co/api/v2/pokemon/${i+1}/'))));           
+          parsedHWJson.add(json.decode(resHeightW[i].body)); 
+          pokeHeightArr.add(parsedHWJson[i]["height"]); 
+          pokeWeightArr.add(parsedHWJson[i]["weight"]);          
     }
   
     setState((){
